@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SpeechToText</string>
+    <string name="screen_title_config">Configuración</string>
+    <string name="screen_title_voice">Voz</string>
+</resources>

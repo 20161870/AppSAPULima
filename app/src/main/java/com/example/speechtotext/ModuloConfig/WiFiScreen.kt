@@ -59,5 +59,4 @@ fun WiFiScreen(
             Text("Enviar Mensaje")
         }
     }
-
 }

@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.speechtotext.Navigation.Screen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -60,7 +61,7 @@ fun BluetoothScreen(
 fun BluetoothFunctionality(
     coroutineScope: CoroutineScope,
     outputStream: MutableState<OutputStream?>,
-    isConnected: MutableState<Boolean>
+    isConnected: MutableState<Boolean>,
 ) {
     val context = LocalContext.current
     val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
@@ -76,6 +77,7 @@ fun BluetoothFunctionality(
                 socket?.connect()
                 outputStream.value = socket?.outputStream
                 isConnected.value = true
+
             } catch (e: IOException) {
                 //e.printStackTrace()
                 isConnected.value = false

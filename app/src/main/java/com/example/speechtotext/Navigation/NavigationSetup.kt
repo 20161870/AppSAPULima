@@ -12,6 +12,8 @@ import com.example.speechtotext.MainScreen
 import com.example.speechtotext.ModuloConfig.BluetoothScreen
 import com.example.speechtotext.ModuloConfig.ConfigScreen
 import com.example.speechtotext.ModuloConfig.WiFiScreen
+import com.example.speechtotext.ModuloRobot.ArmScreen
+import com.example.speechtotext.ModuloRobot.RobotScreen
 import com.example.speechtotext.ModuloVoice.VoiceScreen
 import com.example.speechtotext.ModuloVoice.VoiceViewModel
 import java.io.OutputStream
@@ -40,6 +42,12 @@ fun NavigationSetup(navController: NavHostController) {
         }
         composable(BottomNavItem.Voice.route) {
             VoiceScreen(VoiceViewModel(), coroutineScope, outputStream, isConnected)
+        }
+        composable(BottomNavItem.Robot.route){
+            RobotScreen(navController)
+        }
+        composable(Screen.Arm.route){
+            ArmScreen(coroutineScope, outputStream, isConnected)
         }
     }
 }

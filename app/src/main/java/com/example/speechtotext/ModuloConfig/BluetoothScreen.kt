@@ -7,8 +7,10 @@ import android.bluetooth.BluetoothSocket
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -47,11 +50,14 @@ fun BluetoothScreen(
     outputStream: MutableState<OutputStream?>,
     isConnected: MutableState<Boolean>
 ) {
+    val errorMessage = remember { mutableStateOf<String?>(null) }
+
     Column(
-        Modifier.fillMaxWidth()
+        Modifier.fillMaxSize()
     ) {
-        BluetoothFunctionality(coroutineScope, outputStream, isConnected)
-        StatusBluetooth(isConnected)
+        StatusBluetooth(isConnected, errorMessage.value)
+        Spacer(modifier = Modifier.height(16.dp))
+        BluetoothFunctionality(coroutineScope, outputStream, isConnected, errorMessage)
     }
 
 }
@@ -62,8 +68,9 @@ fun BluetoothFunctionality(
     coroutineScope: CoroutineScope,
     outputStream: MutableState<OutputStream?>,
     isConnected: MutableState<Boolean>,
+    errorMessage: MutableState<String?>
 ) {
-    val context = LocalContext.current
+    // Logica de Bluetooth
     val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     val pairedDevices: List<BluetoothDevice> = bluetoothAdapter?.bondedDevices?.toList() ?: emptyList()
     var selectedDevice by remember { mutableStateOf<BluetoothDevice?>(null) }
@@ -76,15 +83,15 @@ fun BluetoothFunctionality(
                 socket = selectedDevice?.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
                 socket?.connect()
                 outputStream.value = socket?.outputStream
-                isConnected.value = true
-
+                isConnected.value = socket?.isConnected == true
             } catch (e: IOException) {
-                //e.printStackTrace()
+                errorMessage.value = "Error de conexión: ${e.message}"
                 isConnected.value = false
             }
         }
     }
 
+    // Dispositivos pareados en el celular
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -116,11 +123,39 @@ fun BluetoothFunctionality(
 
 @Composable
 fun StatusBluetooth(
-    isConnected: MutableState<Boolean>
+    isConnected: MutableState<Boolean>,
+    errorMessage: String?
 ) {
-    if(isConnected.value){
-        Text(text = "Conectado")
-    } else{
-        Text(text = "Desonectado")
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text =
+                if(isConnected.value == false){
+                    "Desconectado"
+                } else{
+                    "Conectado"
+                }
+            ,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
+            color =
+                if(isConnected.value == false){
+                    Color.Red
+                } else{
+                    Color.Green
+                }
+        )
+        errorMessage?.let {
+            Text(
+                text = it,
+                color = Color.Red,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
     }
 }

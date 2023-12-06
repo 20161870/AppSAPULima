@@ -6,4 +6,6 @@ sealed class Screen(val route: String) {
     object Voice : Screen("VoiceScreen")
     object Bluetooth : Screen("BluetoothScreen")
     object WiFi : Screen("WiFiScreen")
+    object Robot : Screen("RobotScreen")
+    object Arm : Screen("ArmScreen")
 }

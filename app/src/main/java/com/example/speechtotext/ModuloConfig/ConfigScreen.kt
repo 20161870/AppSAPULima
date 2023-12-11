@@ -23,6 +23,8 @@ import com.example.speechtotext.Navigation.Screen
 fun ConfigScreen(
     navController: NavController
 ) {
+    // Opciones de la pantalla Configuración
+    // ** Para agregar otra opción, copiar otro bloque de codigo desde "Surface" **
     Column(
         modifier = Modifier.fillMaxSize()
     ) {

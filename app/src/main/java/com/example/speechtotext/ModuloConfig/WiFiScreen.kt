@@ -31,6 +31,8 @@ fun WiFiScreen(
 ) {
     var ipToSend by remember { mutableStateOf("uno") }
 
+    // Envio de un mensaje a traves de Bluetooth que sirva para conectar el dispositivo BT a Internet
+    // WORK-IN-PROGRESS
     Column(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()

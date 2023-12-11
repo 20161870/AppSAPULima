@@ -11,5 +11,11 @@ fun ArmScreen(
     outputStream: MutableState<OutputStream?>,
     isConnected: MutableState<Boolean>
 ) {
+    // Movimientos predeterminados del brazo
 
+}
+
+@Composable
+fun SendBluetooth() {
+    
 }

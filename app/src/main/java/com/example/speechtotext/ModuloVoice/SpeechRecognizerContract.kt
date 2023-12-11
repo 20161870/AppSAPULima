@@ -7,6 +7,7 @@ import android.speech.RecognizerIntent
 import androidx.activity.result.contract.ActivityResultContract
 import java.util.Locale
 
+// Logica que se conecta al API de Google para Speech-To-Text
 class SpeechRecognizerContract:ActivityResultContract<Unit,ArrayList<String>?>() {
     override fun createIntent(context: Context, input: Unit): Intent {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)

@@ -69,13 +69,13 @@ fun BluetoothFunctionality(
     isConnected: MutableState<Boolean>,
     errorMessage: MutableState<String?>
 ) {
-    // Logica de Bluetooth
     val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     val pairedDevices: List<BluetoothDevice> = bluetoothAdapter?.bondedDevices?.toList() ?: emptyList()
     var selectedDevice by remember { mutableStateOf<BluetoothDevice?>(null) }
 
     var socket: BluetoothSocket? by remember { mutableStateOf(null) }
 
+    // Conexión Bluetooth
     LaunchedEffect(selectedDevice) {
         coroutineScope.launch(Dispatchers.IO) {
             try {
@@ -90,7 +90,7 @@ fun BluetoothFunctionality(
         }
     }
 
-    // Dispositivos pareados en el celular
+    // Mostrar dispositivos pareados en el celular
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -125,6 +125,7 @@ fun StatusBluetooth(
     isConnected: MutableState<Boolean>,
     errorMessage: String?
 ) {
+    // Mensaje de alerta sobre el estado del Bluetooth
     Column(
         modifier = Modifier
             .fillMaxWidth()

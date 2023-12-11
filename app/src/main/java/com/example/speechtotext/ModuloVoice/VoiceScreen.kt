@@ -93,6 +93,7 @@ fun VoiceScreen(
         }
         Spacer(modifier = Modifier.height(20.dp))
 
+        // Boton de Speech-To-Text
         Button(
             onClick = {
                 if(permissionState.status.isGranted){
@@ -107,9 +108,10 @@ fun VoiceScreen(
             )
         }
 
+        // Boton para enviar mensaje del Speech-To-Text
         Button(
             onClick = {
-                if (isConnected.value && outputStream.value != null) {
+                if (outputStream.value != null) {
                     coroutineScope.launch(Dispatchers.IO) {
                         try {
                             outputStream?.value!!.write(messageToSend.toByteArray())

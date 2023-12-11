@@ -20,6 +20,7 @@ import com.example.speechtotext.Navigation.Screen
 fun RobotScreen(
     navController: NavController
 ) {
+    // Opciones para las piezas del robot InMoov
     Column(
         modifier = Modifier.fillMaxSize()
     ) {

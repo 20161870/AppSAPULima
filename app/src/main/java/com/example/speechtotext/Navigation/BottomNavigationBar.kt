@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -32,6 +33,12 @@ sealed class BottomNavItem(
         titleResId = R.string.screen_title_voice,
         icon = Icons.Filled.Call
     )
+
+    object Robot : BottomNavItem(
+        route = Screen.Robot.route,
+        titleResId = R.string.screen_title_robot,
+        icon = Icons.Filled.Person
+    )
 }
 
 @Composable
@@ -40,7 +47,8 @@ fun BottomNavigationBar(
 ) {
     val items = listOf(
         BottomNavItem.Configuration,
-        BottomNavItem.Voice
+        BottomNavItem.Voice,
+        BottomNavItem.Robot
     )
 
     NavigationBar {
